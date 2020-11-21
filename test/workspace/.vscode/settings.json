@@ -1,16 +1,16 @@
 {
-  "journal.base": "${homeDir}/Documents/Synced/Projekte/Private/vscode-journal/test/workspace",
+  "journal.base": "${homeDir}/Documents/journal_test",
   "journal.dev": true,
-  "journal.locale": "de-DE",
+  "journal.locale": "en-US",
   "journal.openInNewEditorGroup": false,
   "journal.patterns": {
     "notes": {
-      "path": "${base}/${year}/${month}/${day}",
-      "file": "${input}.${ext}"
+      "path": "${base}/notes",
+      "file": "N${year}${month}${day}_${input}.${ext}"
     },
     "entries": {
-      "path": "${base}/${year}-${month}",
-      "file": "${day}.${ext}"
+      "path": "${base}",
+      "file": "${year}-${month}-${day}_${weekday}.${ext}"
     }
   },
   "journal.templates": [
@@ -37,11 +37,15 @@
   "journal.scopes": [
      {
       "name": "private", 
-      "base": "${homeDir}/Scoped/Private", 
+      "base": "${homeDir}/Documents/journal_test/Scoped", 
       "patterns": {
         "notes": {
-          "path": "${base}",
-          "file": "${d: YYYYY-DD-MM}-${input}.${ext}"
+          "path": "${base}/notes",
+          "file": "N${year}${month}${day}_${input}.${ext}"
+        },
+        "entries": {
+          "path": "${base}/_daily",
+          "file": "${year}-${month}-${day}_${weekday}.${ext}"
         }
       }
     }

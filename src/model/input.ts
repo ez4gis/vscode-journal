@@ -27,17 +27,17 @@ import * as J from './..';
 
 export class Input {
 
-    
-    private _offset: number; 
-    private _flags: string = ""; 
-    private _text: string = ""; 
-    private _scope: string = ""; 
-    private _tags: string[] = []; 
 
- 
+    private _offset: number;
+    private _flags: string = "";
+    private _text: string = "";
+    private _scope: string = "";
+    private _tags: string[] = [];
+
+
 
     constructor(offset?: number) {
-        this._offset = (isUndefined(offset)) ? 0 : offset; 
+        this._offset = (isUndefined(offset)) ? 0 : offset;
     }
 
 
@@ -47,97 +47,91 @@ export class Input {
      * Getter offset
      * @return {number }
      */
-	public get offset(): number  {
-		return this._offset;
-	}
+    public get offset(): number {
+        return this._offset;
+    }
 
     public get tags(): string[] {
-        return this._tags; 
+        return this._tags;
     }
 
     /**
      * Getter flags
      * @return {string }
      */
-	public get flags(): string  {
-		return this._flags;
-	}
+    public get flags(): string {
+        return this._flags;
+    }
 
     /**
      * Getter text
      * @return {string }
      */
-	public get text(): string  {
-		return this._text;
-	}
+    public get text(): string {
+        return this._text;
+    }
 
     /**
      * Getter scope
      * @return {string }
      */
-	public get scope(): string  {
-		return this._scope;
-	}
+    public get scope(): string {
+        return this._scope;
+    }
 
     /**
      * Setter offset
      * @param {number } value
      */
-	public set offset(value: number ) {
-		this._offset = value;
-	}
+    public set offset(value: number) {
+        this._offset = value;
+    }
 
     /**
      * Setter flags
      * @param {string } value
      */
-	public set flags(value: string ) {
-		this._flags = value;
-	}
+    public set flags(value: string) {
+        this._flags = value;
+    }
 
     /**
      * Setter text
      * @param {string } value
      */
-	public set text(value: string ) {
-		this._text = value;
-	}
+    public set text(value: string) {
+        this._text = value;
+    }
 
     public set tags(values: string[]) {
-        this._tags = values; 
+        this._tags = values;
     }
 
     /**
      * Setter scope
      * @param {string } value
      */
-	public set scope(value: string ) {
-		this._scope = value;
+    public set scope(value: string) {
+        this._scope = value;
     }
 
 
     public hasMemo(): boolean {
-        return this.text.length > 0; 
+        return this.text.length > 0;
     }
 
     public hasFlags(): boolean {
-        return this.flags.length > 0; 
+        return this.flags.length > 0;
     }
 
     public hasOffset(): boolean {
-        return !isNaN(this.offset); 
+        return !isNaN(this.offset);
     }
-
-    public hasTask(): boolean {
-        let matches: RegExpMatchArray | null  = this.flags.match("task|todo"); 
-        return (matches !== null && matches.length > 0);
-    }
-
 
     //  e.g. Add a task for the entry of 2019-09-03
     public generateDescription(config: J.Extension.Configuration): string {
         moment.locale(config.getLocale());
-        return moment(this.generateDate()).format("ddd, LL"); 
+        return moment(this.generateDate()).format("ddd, LL");
     }
 
 
@@ -145,52 +139,49 @@ export class Input {
     public generateDate(): Date {
         let date = new Date();
         date.setDate(date.getDate() + this.offset);
-        return date; 
+        return date;
 
     }
 
 
     public generateDetail(config: J.Extension.Configuration): string {
-        moment.locale(config.getLocale()); 
-        let t: moment.Moment = moment(this.generateDate()); 
+        moment.locale(config.getLocale());
+        let t: moment.Moment = moment(this.generateDate());
 
-        let time: string = t.calendar(moment(), config.getInputDetailsTimeFormat()); 
+        let time: string = t.calendar(moment(), config.getInputDetailsTimeFormat());
 
-        if(this.hasTask()) return config.getInputDetailsStringForTask(time); 
-        if(this.hasMemo()) return config.getInputDetailsStringForMemo(time); 
-
-        return config.getInputDetailsStringForEntry(time); 
+        return config.getInputDetailsStringForEntry(time);
     }
 
-    
+
 }
 
 export class NoteInput extends Input {
 
-    private _path: string = ""; 
+    private _path: string = "";
 
     constructor() {
-        super(0); 
+        super(0);
     }
 
-    public get path() {return this._path}
-    public set path( path: string ) {this._path = path}
-    
+    public get path() { return this._path }
+    public set path(path: string) { this._path = path }
+
 }
 
 export class SelectedInput extends Input {
 
     private _selected: boolean = false; // if selected from quickpick
-    private _path: string = ""; 
+    private _path: string = "";
 
 
-    public get selected() {return this._selected}
-    public get path() {return this._path}
+    public get selected() { return this._selected }
+    public get path() { return this._path }
 
     constructor(path: string) {
-        super(0); 
-        this._selected = true; 
-        this._path = path; 
+        super(0);
+        this._selected = true;
+        this._path = path;
     }
 
 

@@ -1,6 +1,6 @@
 
 
-Create Note
+<!-- Create Note -->
     New Note
         New file is created in correct location
         Link to file is placed in today's entry in correct location
@@ -13,17 +13,17 @@ Create Note
 Create Entry
     magic input = 0, +2, -5, last wednesday, next fri, specific date
 
-Create tasks
+<!-- Create tasks -->
     magic input: "task today do this", "task next friday do this", "task specific date do this"
     
-Create memo
+<!-- Create memo -->
     magic input, same as above without flag "task"
 
-Print time
+<!-- Print time -->
 
-Compute Duration
+<!-- Compute Duration -->
 
-Compute Sum
+<!-- Compute Sum -->
 
 ## Configuration
 change locale

@@ -55,53 +55,53 @@ export class Parser {
             // Unscoped Notes are always created in today's folder
             let date = new Date();
             let path: string = "";
-            input.scope = SCOPE_DEFAULT;  
+            input.scope = SCOPE_DEFAULT;
 
             // purge all tags from filename
 
             // all tags are filtered out. tags representing scopes are recognized here for resolving the note path.
             input.text.match(/#\w+\s/g)?.forEach(tag => {
-                if(isNullOrUndefined(tag) || tag.length == 0) return; 
+                if (isNullOrUndefined(tag) || tag.length == 0) return;
 
-                console.log("Tags in input string: "+tag);
-                
+                console.log("Tags in input string: " + tag);
+
                 // remove from value
-                input.tags.push(tag.trim().substr(0, tag.length-1)); 
-                input.text = input.text.replace(tag, " "); 
+                input.tags.push(tag.trim().substr(0, tag.length - 1));
+                input.text = input.text.replace(tag, " ");
 
                 // identify scope, input is #tag
 
-                let scope: string | undefined = this.ctrl.configuration.getScopes().filter(name => name == tag.trim().substring(1, tag.length)).pop(); 
-                console.log("Found scope: "+this.ctrl.configuration.getScopes());
-                
-                if(!isUndefined(scope) && scope.length > 0) {
-                    input.scope = scope; 
-                } 
-                
-                console.log("Identified scope in input: "+input.scope);
-                
+                let scope: string | undefined = this.ctrl.configuration.getScopes().filter(name => name == tag.trim().substring(1, tag.length)).pop();
+                console.log("Found scope: " + this.ctrl.configuration.getScopes());
+
+                if (!isUndefined(scope) && scope.length > 0) {
+                    input.scope = scope;
+                }
+
+                console.log("Identified scope in input: " + input.scope);
+
             });
 
 
             let inputForFileName: string = J.Util.normalizeFilename(input.text)
 
             Q.all([
-                this.ctrl.configuration.getNotesFilePattern(date, inputForFileName, input.scope), 
-                this.ctrl.configuration.getNotesPathPattern(date, input.scope), 
-                ])
-            .then(([fileTemplate, pathTemplate]) => {
-                path = Path.resolve(pathTemplate.value!, fileTemplate.value!);
-                this.ctrl.logger.debug("Resolved path for note is", path);
-                resolve(path); 
-            })
-            .catch(error => {
-                this.ctrl.logger.error(error);
-                reject(error);
+                this.ctrl.configuration.getNotesFilePattern(date, inputForFileName, input.scope),
+                this.ctrl.configuration.getNotesPathPattern(date, input.scope),
+            ])
+                .then(([fileTemplate, pathTemplate]) => {
+                    path = Path.resolve(pathTemplate.value!, fileTemplate.value!);
+                    this.ctrl.logger.debug("Resolved path for note is", path);
+                    resolve(path);
+                })
+                .catch(error => {
+                    this.ctrl.logger.error(error);
+                    reject(error);
 
-            })
-            .done();
+                })
+                .done();
 
-        }); 
+        });
 
     }
 
@@ -124,8 +124,8 @@ export class Parser {
 
     public parseNotetile(value: string): Q.Promise<J.Model.Input> {
         return Q.Promise<J.Model.Input>((resolve, reject) => {
-            new J.Model.Input(0); 
-        }); 
+            new J.Model.Input(0);
+        });
     }
 
 
@@ -164,10 +164,7 @@ export class Parser {
 
                 // text but no flags, we default to "memo" (for notes we ignore this later)
                 if (!input.hasFlags() && input.hasMemo()) {
-                    // but only if exceeds a certain length
-                    // if (input.text.length > 6) {
-                        input.flags = "memo";
-                    // }
+                    input.flags = "memo";
                 }
 
                 // if not temporal modifier in input, but flag and text, we default to today

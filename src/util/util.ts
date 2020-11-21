@@ -84,27 +84,6 @@ export function formatDate(date: Date, template: string, locale: string): string
     return now;
 }
 
-
-/**
-* Returns target  for notes as string; 
-*/
-// TODO: this has to be reimplemented, should consider the configuration of the path for notes in different scopes
-export function getFilePathInDateFolder(date: Date, filename: string, base: string, ext: string): Q.Promise<string> {
-    return Q.Promise<string>((resolve, reject) => {
-        try {
-            let pathStr = Path.resolve(getPathOfMonth(date, base), getDayAsString(date), filename + "." + ext);
-            let path: Path.ParsedPath = Path.parse(pathStr);
-            resolve(Path.format(path));
-
-        } catch (error) {
-            reject(error);
-        }
-    });
-}
-
-
-
-
 /**
 * Returns the path for a given date as string
 * @deprecated
@@ -142,19 +121,19 @@ export function getFileInURI(uri: string, withExtension?: boolean): string {
     }
 }
 
-export function getNextLine(content: string): string[] {
+// export function getNextLine(content: string): string[] {
 
-    let res: string[] = ["", ""];
+//     let res: string[] = ["", ""];
 
-    let pos: number = content.indexOf('\n');
-    if (pos > 0) {
-        res[0] = content.slice(0, pos);
-        res[1] = content.slice(pos + 1, content.length);
-    } else {
-        res[0] = content;
-    }
-    return res;
-}
+//     let pos: number = content.indexOf('\n');
+//     if (pos > 0) {
+//         res[0] = content.slice(0, pos);
+//         res[1] = content.slice(pos + 1, content.length);
+//     } else {
+//         res[0] = content;
+//     }
+//     return res;
+// }
 
 
 
@@ -189,8 +168,8 @@ export function prefixZero(nr: number): string {
  */
 export function normalizeFilename(input: string): string {
     let result = input.trim();
-    result = result.replace(/\s/g, '_');
-    result = result.replace(/\\|\/|\<|\>|\:|\n|\||\?|\*/g, '-');
+    // result = result.replace(/\s/g, '_');
+    result = result.replace(/\\|\/|\<|\>|\:|\n|\||\?|\*/g, ' ');
     return result;
 }
 

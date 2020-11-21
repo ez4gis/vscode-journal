@@ -30,15 +30,15 @@ import { stringIsNotEmpty } from '../util';
 export interface FileEntry {
     path: string;
     name: string;
-    scope: string; 
+    scope: string;
     update_at: number;
     created_at: number;
     type: JournalPageType;
 }
 
 export interface BaseDirectory {
-    path: string; 
-    scope: string; 
+    path: string;
+    scope: string;
 }
 
 /** 
@@ -62,7 +62,7 @@ export class Reader {
      * @deprecated  aargh, why?
      */
     public getPreviouslyAccessedFiles(thresholdInMs: number, callback: Function, picker: any, type: JournalPageType, directories: BaseDirectory[]): void {
-       
+
         /*
         deferred.resolve(this.previousEntries.map((f: FileEntry) => {
             return f.path; 
@@ -71,7 +71,7 @@ export class Reader {
         // go into base directory, find all files changed within the last 40 days
         // for each file, check if it is an entry, a note or an attachement
         Q.fcall(() => {
-            this.ctrl.logger.trace("Entering getPreviousJournalFiles() in actions/reader.ts and directory: "+directories);
+            this.ctrl.logger.trace("Entering getPreviousJournalFiles() in actions/reader.ts and directory: " + directories);
             directories.forEach(directory => {
                 this.walkDir(directory.path, thresholdInMs, (entry: FileEntry) => {
                     /*if (this.previousEntries.findIndex(e => e.path.startsWith(entry.path)) == -1) {
@@ -80,7 +80,7 @@ export class Reader {
                     }*/
 
                     entry.type = this.inferType(Path.parse(entry.path));
-                    entry.scope = directory.scope; 
+                    entry.scope = directory.scope;
                     // this adds the item to the quickpick list of vscode (the addItem Function)
                     callback(entry, picker, type);
 
@@ -95,7 +95,7 @@ export class Reader {
             try {
                 this.ctrl.logger.trace("Entering getPreviousJournalFilesSync() in actions/reader.ts");
 
-                let result: FileEntry[] = []; 
+                let result: FileEntry[] = [];
 
                 // go into base directory, find all files changed within the last 40 days (see config)
                 // for each file, check if it is an entry, a note or an attachement
@@ -107,14 +107,14 @@ export class Reader {
                         }*/
                         entry.type = this.inferType(Path.parse(entry.path));
                         entry.scope = directory.scope;
-                        result.push(entry); 
+                        result.push(entry);
                     });
-                }); 
-                resolve(result); 
+                });
+                resolve(result);
             } catch (error) {
-                reject(error); 
+                reject(error);
             }
-           
+
         });
 
 
@@ -307,7 +307,7 @@ export class Reader {
                                         })
                                         .map((name: string) => {
 
-                                            return vscode.Uri.file(Path.normalize(pathPattern.value! + Path.sep + name)); 
+                                            return vscode.Uri.file(Path.normalize(pathPattern.value! + Path.sep + name));
                                         }));
                                 });
                             } else {
@@ -428,9 +428,9 @@ export class Reader {
                 }
                 return this.ctrl.writer.createEntryForPath(path, date);
 
-            }).then((_doc: vscode.TextDocument) => {
-                this.ctrl.logger.debug("loadEntryForDate() - Loaded file in:", _doc.uri.toString());
-                return this.ctrl.inject.synchronizeReferencedFiles(_doc, date);
+                // }).then((_doc: vscode.TextDocument) => {
+                // this.ctrl.logger.debug("loadEntryForDate() - Loaded file in:", _doc.uri.toString());
+                // return this.ctrl.inject.synchronizeReferencedFiles(_doc, date);
 
             }).then((_doc: vscode.TextDocument) => {
                 resolve(_doc);
@@ -440,34 +440,6 @@ export class Reader {
                 reject("Failed to load entry for date: " + date.toDateString());
 
             }).done();
-
-
-
-            /*
-            J.Util.getEntryPathForDate(date, this.ctrl.config.getBasePath(), this.ctrl.config.getFileExtension())
-                .then((_path: string) => {
-                    path = _path;
-                    return this.ctrl.ui.openDocument(path);
-                })
-                .catch((error: Error) => {
-                    return this.ctrl.writer.createEntryForPath(path, date);
-                })
-                .then((_doc: vscode.TextDocument) => {
-                    this.ctrl.logger.debug("Loaded file:", _doc.uri.toString());
-    
-                    return this.ctrl.inject.synchronizeReferencedFiles(_doc);
-                })
-                .then((_doc: vscode.TextDocument) => {
-                    resolve(_doc);
-                })
-    
-                .catch((error: Error) => {
-                    this.ctrl.logger.error(error);
-                    reject("Failed to load entry for date: " + date.toDateString());
-                })
-                .done();
-                */
-
         });
     }
 

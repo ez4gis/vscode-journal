@@ -1,7 +1,7 @@
 {
-  "name": "vscode-journal",
-  "displayName": "vscode-journal",
-  "description": "Lightweight journal and simple notes support for Visual Studio Code",
+  "name": "vscode-journal-ez4gis",
+  "displayName": "vscode-journal-ez4gis",
+  "description": "Simple journal for Visual Studio Code based on pajoma's [vscode-journal](https://github.com/pajoma/vscode-journal.git)",
   "keywords": [
     "journal",
     "diary",
@@ -9,8 +9,8 @@
     "memo",
     "date"
   ],
-  "version": "0.10.9",
-  "publisher": "pajoma",
+  "version": "0.10.10",
+  "publisher": "ez4gis",
   "engines": {
     "vscode": "^1.45.0"
 
@@ -29,11 +29,11 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/pajoma/vscode-journal.git"
+    "url": "https://github.com/ez4gis/vscode-journal.git"
   },
   "bugs": {
-    "url": "https://github.com/pajoma/vscode-journal/issues",
-    "email": "pajoma@gmail.com"
+    "url": "https://github.com/ez4gis/vscode-journal/issues",
+    "email": "ez4gis@gmail.com"
   },
   "activationEvents": [
     "onCommand:journal.day",
@@ -42,22 +42,12 @@
     "onCommand:journal.yesterday",
     "onCommand:journal.tomorrow",
     "onCommand:journal.note",
-    "onCommand:journal.memo",
-    "onCommand:journal.open",
-    "onCommand:journal.printDuration",
-    "onCommand:journal.printTime",
-    "onCommand:journal.printSum",
-    "onCommand:journal.test"
+    "onCommand:journal.open"
   ],
   "main": "./out/src/extension",
   "contributes": {
     "markdown.markdownItPlugins": true,
     "commands": [
-      {
-        "command": "journal.test",
-        "title": "Run Test feature",
-        "category": "Journal"
-      },
       {
         "command": "journal.today",
         "title": "Open Today",
@@ -74,38 +64,18 @@
         "category": "Journal"
       },
       {
-        "command": "journal.memo",
-        "title": "Enter Quick Memo",
-        "category": "Journal"
-      },
-      {
-        "command": "journal.note",
-        "title": "New Journal Note",
-        "category": "Journal"
-      },
-      {
-        "command": "journal.printTime",
-        "title": "Print time",
-        "category": "Journal"
-      },
-      {
-        "command": "journal.printDuration",
-        "title": "Print elapsed hours between selected times",
-        "category": "Journal"
-      },
-      {
-        "command": "journal.printSum",
-        "title": "Print the sum of the selected numbers",
-        "category": "Journal"
-      },
-      {
         "command": "journal.day",
-        "title": "Enter specific day",
+        "title": "Open specific day",
         "category": "Journal"
       },
       {
         "command": "journal.open",
         "title": "Open the Journal",
+        "category": "Journal"
+      },
+      {
+        "command": "journal.note",
+        "title": "New Journal Note",
         "category": "Journal"
       }
     ],
@@ -114,27 +84,6 @@
         "command": "journal.day",
         "key": "ctrl+shift+j",
         "mac": "cmd+shift+j"
-      },
-      {
-        "command": "journal.printDuration",
-        "key": "ctrl+j d",
-        "mac": "cmd+j d",
-        "when": "editorTextFocus && editorHasMultipleSelections"
-      },
-      {
-        "command": "journal.printSum",
-        "key": "ctrl+j s",
-        "mac": "cmd+j s",
-        "when": "editorTextFocus && editorHasMultipleSelections"
-      }
-    ],
-    "grammars": [
-      {
-        "scopeName": "text.markdown.journal",
-        "path": "./res/syntax/journal-markdown.json",
-        "injectTo": [
-          "text.html.markdown"
-        ]
       }
     ],
     "snippets": [
@@ -150,12 +99,12 @@
         "journal.base": {
           "type": "string",
           "default": "",
-          "description": "(Mandatatory) The base directory for your notes. Defaults to the directory 'Journal' in your home directory. Supports embedded variables"
+          "description": "(Mandatatory) The base directory for your notes. Defaults to the directory 'Journal' in your home directory."
         },
         "journal.ext": {
           "type": "string",
           "default": "md",
-          "description": "The default extension of your notes and journal entries. Defaults to markdown (.md)- "
+          "description": "The default extension of your notes and journal entries. Defaults to markdown (.md)."
         },
         "journal.locale": {
           "type": "string",
@@ -186,56 +135,6 @@
           "default": "",
           "description": "The template string for inserting the current time at the cursor location. Defaults to local time. "
         },
-        "journal.tpl-note": {
-          "type": "string",
-          "default": "",
-          "description": "The template string for your notes. This setting is outdated, please use the setting 'templates' instead "
-        },
-        "journal.tpl-memo": {
-          "type": "string",
-          "default": "- MEMO: ${input}",
-          "description": "The template string for new memos (new lines). This setting is outdated, please use the setting 'templates' instead"
-        },
-        "journal.tpl-memo-after": {
-          "type": "string",
-          "default": "",
-          "description": "Where to place new memos. (Default is empty, which means after the header). This setting is outdated, please use the setting 'templates' instead"
-        },
-        "journal.tpl-task": {
-          "type": "string",
-          "default": "- [ ] TASK: ${input}",
-          "description": "The template string for new tasks. This setting is outdated, please use the setting 'templates' instead"
-        },
-        "journal.tpl-task-after": {
-          "type": "string",
-          "default": "",
-          "description": "Where to place the tasks. (Default is empty, which means after the header). This setting is outdated, please use the setting 'templates' instead"
-        },
-        "journal.tpl-todo": {
-          "type": "string",
-          "default": "",
-          "description": "The template string for new todos. This setting is outdated, please use the setting 'templates' instead"
-        },
-        "journal.tpl-todo-after": {
-          "type": "string",
-          "default": "",
-          "description": "Where to place the todos. (Default is empty, which means after the header). This setting is outdated, please use the setting 'templates' instead"
-        },
-        "journal.tpl-files": {
-          "type": "string",
-          "default": "",
-          "description": "Template for the link to notes"
-        },
-        "journal.tpl-files-after": {
-          "type": "string",
-          "default": "",
-          "description": "Where to place the file links to notes and more. (Default is empty, which means after the header). This setting is outdated, please use the setting 'templates' instead"
-        },
-        "journal.dev": {
-          "type": "boolean",
-          "default": "false",
-          "description": "If enabled, the features in development will be activated (other features might be broken!!) "
-        },
         "journal.openInNewEditorGroup": {
           "type": "boolean",
           "default": false,
@@ -250,14 +149,6 @@
           "type": "array",
           "default": [
             {
-              "name": "memo",
-              "template": "- MEMO ${localTime}: ${input}"
-            },
-            {
-              "name": "task",
-              "template": "- [] ${d:LL} - Task: ${input}"
-            },
-            {
               "name": "entry",
               "template": "# ${d:dddd, MMMM DD YYYY}\n\n## Tasks\n\n## Notes\n\n"
             },
@@ -268,10 +159,6 @@
             {
               "name": "note",
               "template": "# ${input}\n\n${tags}\n"
-            },
-            {
-              "name": "files",
-              "template": "- NOTE: [${title}](${link})"
             }
           ],
           "description": "Definition of templates used when generate content for the journal. See Guide for more details. "
