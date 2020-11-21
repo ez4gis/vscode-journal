@@ -139,7 +139,7 @@
           "default": [
             {
               "name": "entry",
-              "template": "# ${d:dddd, MMMM DD YYYY}\n\n## Tasks\n\n## Notes\n\n"
+              "template": "# ${year}-${month}-${day}\n\n## Tasks\n\n## Work Log\n\n## Meeting Log\n\n## Communication Log\n\n## Notes\n\n## Gratitude\n\n"
             },
             {
               "name": "time",
