@@ -590,27 +590,27 @@ export class Configuration {
         return (isNullOrUndefined(_scopeId) || (_scopeId!.length === 0)) ? SCOPE_DEFAULT : _scopeId!;
     }
 
-    /**
-     * Returns the pattern with the given id (loads them from vscode config if needed)
-     * 
-     * @param id 
-     * @deprecated
-     */
-    private getPatternX(id: string): Q.Promise<ScopedTemplate> {
-        return Q.Promise<ScopedTemplate>((resolve, reject) => {
-            try {
-                this.loadPatternsX()
-                    .then(b => {
-                        let tpl: ScopedTemplate = <ScopedTemplate>this.patterns.get(id);
-                        tpl.value = tpl.template;  // reset template
-                        resolve(tpl);
-                    });
-            } catch (error) {
-                reject(error);
-            }
+    // /**
+    //  * Returns the pattern with the given id (loads them from vscode config if needed)
+    //  * 
+    //  * @param id 
+    //  * @deprecated
+    //  */
+    // private getPatternX(id: string): Q.Promise<ScopedTemplate> {
+    //     return Q.Promise<ScopedTemplate>((resolve, reject) => {
+    //         try {
+    //             this.loadPatternsX()
+    //                 .then(b => {
+    //                     let tpl: ScopedTemplate = <ScopedTemplate>this.patterns.get(id);
+    //                     tpl.value = tpl.template;  // reset template
+    //                     resolve(tpl);
+    //                 });
+    //         } catch (error) {
+    //             reject(error);
+    //         }
 
-        });
-    }
+    //     });
+    // }
 
     private replaceVariableValue(key: string, value: string, template: string): string {
         if (template.search("\\$\\{" + key + "\\}") >= 0) {
@@ -686,70 +686,70 @@ export class Configuration {
     }
 
 
-    /** 
-     * Loads the patterns if needed from the vscode configuration. 
-     */
-    private loadPatternsX(): Q.Promise<boolean> {
-        return Q.Promise<boolean>((resolve, reject) => {
-            if (this.patterns.size > 0) {
-                resolve(true);
-                return;
-            }
+    // /** 
+    //  * Loads the patterns if needed from the vscode configuration. 
+    //  */
+    // private loadPatternsX(): Q.Promise<boolean> {
+    //     return Q.Promise<boolean>((resolve, reject) => {
+    //         if (this.patterns.size > 0) {
+    //             resolve(true);
+    //             return;
+    //         }
 
-            let config: PatternDefinition | undefined = this.config.get<PatternDefinition>('patterns');
+    //         let config: PatternDefinition | undefined = this.config.get<PatternDefinition>('patterns');
 
-            //FIXME: support scopes
-            try {
-                if (isNullOrUndefined(config)) {
-                    config = {
-                        notes: {
-                            path: "${base}/${year}/${month}/${day}",
-                            file: "${input}.${ext}"
-                        },
-                        entries: {
-                            path: "${base}/${year}/${month}",
-                            file: "${day}.${ext}"
-                        }
-                    };
-                }
+    //         //FIXME: support scopes
+    //         try {
+    //             if (isNullOrUndefined(config)) {
+    //                 config = {
+    //                     notes: {
+    //                         path: "${base}/${year}/${month}/${day}",
+    //                         file: "${input}.${ext}"
+    //                     },
+    //                     entries: {
+    //                         path: "${base}/${year}/${month}",
+    //                         file: "${day}.${ext}"
+    //                     }
+    //                 };
+    //             }
 
-                // setting the default patterns
-                this.patterns.set("default.pattern.notes.path",
-                    {
-                        name: "default.pattern.notes.path",
-                        scope: "default",
-                        template: config.notes.path
-                    });
-                this.patterns.set("default.pattern.notes.file",
-                    {
-                        name: "default.pattern.notes.file",
-                        scope: "default",
-                        template: config.notes.file
-                    });
-                this.patterns.set("default.pattern.entries.path",
-                    {
-                        name: "default.pattern.entries.path",
-                        scope: "default",
-                        template: config.entries.path
-                    });
-                this.patterns.set("default.pattern.entries.file",
-                    {
-                        name: "default.pattern.entries.file",
-                        scope: "default",
-                        template: config.entries.file
-                    });
-
-
-                // TODO: setting the scoped patterns
+    //             // setting the default patterns
+    //             this.patterns.set("default.pattern.notes.path",
+    //                 {
+    //                     name: "default.pattern.notes.path",
+    //                     scope: "default",
+    //                     template: config.notes.path
+    //                 });
+    //             this.patterns.set("default.pattern.notes.file",
+    //                 {
+    //                     name: "default.pattern.notes.file",
+    //                     scope: "default",
+    //                     template: config.notes.file
+    //                 });
+    //             this.patterns.set("default.pattern.entries.path",
+    //                 {
+    //                     name: "default.pattern.entries.path",
+    //                     scope: "default",
+    //                     template: config.entries.path
+    //                 });
+    //             this.patterns.set("default.pattern.entries.file",
+    //                 {
+    //                     name: "default.pattern.entries.file",
+    //                     scope: "default",
+    //                     template: config.entries.file
+    //                 });
 
 
+    //             // TODO: setting the scoped patterns
 
-                resolve(true);
-            } catch (error) {
-                reject(error);
-            }
-        });
-    }
+
+
+    //             resolve(true);
+    //         } catch (error) {
+    //             reject(error);
+    //         }
+    //     });
+    // }
 
 
 
