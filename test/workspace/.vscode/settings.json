@@ -10,34 +10,32 @@
     },
     "entries": {
       "path": "${base}",
-      "file": "${year}-${month}-${day}_${weekday}.${ext}"
+      "file": "${year}-${month}-${day}_${d:ddd}.${ext}"
     }
   },
   "journal.templates": [
     {
-      "name": "memo", 
+      "name": "memo",
       "template": "- ${d:HHmm}: ${input}"
-    }, 
+    },
     {
-      "name": "task", 
-      "template": "- [] Task: ${input}", 
+      "name": "task",
+      "template": "- [] Task: ${input}",
       "after": "## Tasks"
-    }, 
+    },
     {
-      "name": "entry", 
+      "name": "entry",
       "template": "# ${d:dddd, MMMM DD YYYY}\n\n## Tasks\n\n## Notes\n\n"
-    }, 
+    },
     {
-      "name": "time", 
+      "name": "time",
       "template": "${localTime}"
-    },     
-  ]
-  , 
-
+    }
+  ],
   "journal.scopes": [
-     {
-      "name": "private", 
-      "base": "${homeDir}/Documents/journal_test/Scoped", 
+    {
+      "name": "private",
+      "base": "${homeDir}/Documents/journal_test/Scoped",
       "patterns": {
         "notes": {
           "path": "${base}/notes",
