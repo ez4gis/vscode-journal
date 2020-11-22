@@ -324,7 +324,7 @@ export class Configuration {
                     template: ""
                 }
                 if (this.resolveScope(_scopeId) == SCOPE_DEFAULT) {
-                    definition = this.config.get<PatternDefinition>("pattern")?.entries?.file;
+                    definition = this.config.get<PatternDefinition>("patterns")?.entries?.file;
                 } else {
                     definition = this.config.get<ScopeDefinition[]>("scopes")?.filter(sd => sd.name == _scopeId).pop()?.patterns?.entries?.file;
                     scopedTemplate.scope = _scopeId!;
