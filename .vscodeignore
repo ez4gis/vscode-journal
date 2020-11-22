@@ -1,6 +1,8 @@
 .vscode/**
 .vscode-test/**
 out/test/**
+img/time.gif
+typings/**
 test/**
 src/**
 docs/**
