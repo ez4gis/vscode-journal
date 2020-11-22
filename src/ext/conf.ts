@@ -385,7 +385,7 @@ export class Configuration {
                 case "${localDate}":
                     template = template.replace(match, mom.format("LL")); break;
                 case "${weekday}":
-                    template = template.replace(match, mom.format("ddd")); break;
+                    template = template.replace(match, mom.format("dddd")); break;
                 default:
                     // check if custom format
                     if (match.startsWith("${d:")) {
